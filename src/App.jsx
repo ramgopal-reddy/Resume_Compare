@@ -16,7 +16,7 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="font-mono">
+    <div className="text-sm md:text-lg lg:text-xl font-mono">
       <AnimatedBackground animationName="starryNight" blendMode="difference" />
       {/* Background animation top */}
       <div
