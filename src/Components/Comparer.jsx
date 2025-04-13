@@ -78,59 +78,64 @@ const ResumeComparator = () => {
   
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">Compare Two Resumes</h2>
+    <div className="mt-20 flex flex-col items-center">
 
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 gap-20 sm:grid-cols-2 lg:grid-cols-3 w-full max-w-7xl"
+      >
+        <div className="rounded-xl p-10 shadow-sm border border-white">
           <label className="form-label">Upload Resume 1:</label>
           <input
             type="file"
-            accept="application/pdf"
-            className="form-control"
             onChange={handleResume1Change}
           />
           {resume1 && (
-            <>
-              <div className="mt-2 text-success">
-                <strong>Selected:</strong> {resume1.name}
-              </div>
-            </>
+            <div className="mt-2 text-success">
+              <strong>Selected:</strong> {resume1.name}
+            </div>
           )}
         </div>
 
-        <div className="mb-4">
+        <div className="rounded-xl p-10 shadow-sm border border-white">
           <label className="form-label">Upload Resume 2:</label>
           <input
             type="file"
-            accept="application/pdf"
-            className="form-control"
             onChange={handleResume2Change}
           />
           {resume2 && (
-            <>
-              <div className="mt-2 text-success">
-                <strong>Selected:</strong> {resume2.name}
-              </div>
-            </>
+            <div className="mt-2 text-success">
+              <strong>Selected:</strong> {resume2.name}
+            </div>
           )}
         </div>
 
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? <Skeleton/> : "Compare Resumes"}
-        </button>
+        <div className="col-span-full">
+          <button
+            type="submit"
+            className="w-full rounded-xl p-10 shadow-sm"
+            disabled={loading}
+          >
+            {loading ? <Skeleton /> : "Compare Resumes"}
+          </button>
+        </div>
       </form>
 
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      {error && (
+        <div className="col-span-full alert alert-danger mt-3 text-center">
+          {error}
+        </div>
+      )}
 
       {comparisonResult && (
-        <div className="alert alert-success mt-4">
-        <h5>Comparison Result:</h5>
-        <div
-          style={{ whiteSpace: 'pre-wrap', lineHeight: '1.6' }}
-          dangerouslySetInnerHTML={{ __html: formatComparisonText(comparisonResult) }}
-        />
-      </div>
+        <div className="col-span-full mt-4 bg-white dark:bg-gray-700 p-8 shadow-sm mt-20 m-10 border border-white rounded-xl">
+          <h5 className="text-left mb-4">Comparison Result:</h5>
+          <div
+            className="text-left sm:pl-4 lg:pl-10"
+            style={{ whiteSpace: "pre-wrap", lineHeight: "1.6" }}
+            dangerouslySetInnerHTML={{ __html: formatComparisonText(comparisonResult) }}
+          />
+        </div>
       )}
     </div>
   );
