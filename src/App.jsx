@@ -95,7 +95,7 @@ export default function HomePage() {
 
 
       {/* Hero Section */}
-      <main className="relative px-6 pt-32 lg:px-8 z-10">
+      <main className="relative px-6 pt-16 lg:px-8 z-10">
         <div className="mx-auto max-w-2xl py-24 sm:py-48 lg:py-56 text-center">
           <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
             Empower Your Career with Smarter Resume Comparisons
@@ -141,7 +141,7 @@ export default function HomePage() {
           {[
             { title: 'Fast', description: 'Get instant results with our optimized comparison engine.' },
             { title: 'Accurate', description: 'Detailed insights to help you make informed decisions.' },
-            { title: 'Secure', description: 'Your data is encrypted and handled with utmost care.' },
+            { title: 'Secure', description: 'Your data is encrypted and handled with upmost care.' },
           ].map((feature, i) => (
             <div key={i} className="rounded-xl bg-white dark:bg-gray-700 p-6 shadow-sm">
               <h3 className="text-xl font-semibold">{feature.title}</h3>

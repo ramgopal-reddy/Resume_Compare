@@ -128,10 +128,10 @@ const ResumeComparator = () => {
       )}
 
       {comparisonResult && (
-        <div className="col-span-full mt-4 bg-white dark:bg-gray-700 p-8 shadow-sm mt-20 m-10 border border-white rounded-xl">
-          <h5 className="text-left mb-4">Comparison Result:</h5>
+        <div className="col-span-full mt-8 bg-white dark:bg-gray-700 p-8 shadow-sm mt-20 sm:m-1 border border-white rounded-xl">
+          <h5 className="text-left mb-8">Comparison Result:</h5>
           <div
-            className="text-left sm:pl-4 lg:pl-10"
+            className="text-left sm:pl-2 lg:pl-10 xl:pl-16 text-gray-900 dark:text-white text-sm"
             style={{ whiteSpace: "pre-wrap", lineHeight: "1.6" }}
             dangerouslySetInnerHTML={{ __html: formatComparisonText(comparisonResult) }}
           />
