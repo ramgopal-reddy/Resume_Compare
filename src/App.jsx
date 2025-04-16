@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import ResumeComparator from './Components/Comparer';
 import { AnimatedBackground } from 'animated-backgrounds';
 import HrLine from './Components/HrLine';
+import TestCompo from './Components/TestCompo';
 
 const navigation = [
   { name: 'Our Features', href: '#resume' },
@@ -152,6 +153,8 @@ export default function HomePage() {
       </section>
       <HrLine />
 
+      <TestCompo/>
+
       {/* New CTA Section */}
       <section className="text-white px-6 py-16 text-center">
         <h2 className="text-3xl font-bold tracking-tight">Ready to Compare Resumes?</h2>
@@ -161,7 +164,7 @@ export default function HomePage() {
         <div className="mt-6">
           <a
             href="#resume"
-            className="inline-block rounded-md bg-white px-4 py-2 text-sm font-semibold text-indigo-600 hover:bg-gray-100"
+            className="inline-block rounded-md bg-white px-4 py-2 text-sm font-semibold text-indigo-600 hover:bg-gray-100 shadow-lg shadow-indigo-500/50"
           >
             Start Comparing Now
           </a>
