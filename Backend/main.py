@@ -1,33 +1,12 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from pydantic import BaseModel
-import google.generativeai as genai
+import streamlit as st
 import os
-from typing import Dict, List
 from io import BytesIO
 from PyPDF2 import PdfReader
-
-app = FastAPI()
-
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+import google.generativeai as genai
 
 # Configure Google AI
 genai.configure(api_key=os.getenv("API_KEY"))
 model = genai.GenerativeModel('gemini-2.0-flash')
-
-# Root endpoint
-@app.get("/")
-@app.head("/")
-async def read_root():
-    return {"message": "API is working!"}
 
 # PDF text extractor
 def extract_text_from_pdf(pdf_file: BytesIO) -> str:
@@ -37,36 +16,37 @@ def extract_text_from_pdf(pdf_file: BytesIO) -> str:
         text += page.extract_text()
     return text
 
-# New endpoint to compare two resumes
-@app.post("/api/compare_resumes")
-async def compare_resumes(files: List[UploadFile] = File(...)) -> Dict[str, str]:
-    if len(files) != 2:
-        raise HTTPException(status_code=400, detail="Please upload exactly two PDF files.")
+# Compare two resumes using Gemini
+def compare_resumes(pdf1: BytesIO, pdf2: BytesIO) -> str:
+    text1 = extract_text_from_pdf(pdf1)
+    text2 = extract_text_from_pdf(pdf2)
 
-    try:
-        # Extract text from both PDFs
-        texts = []
-        for file in files:
-            content = await file.read()
-            if not file.filename.lower().endswith(".pdf"):
-                raise HTTPException(status_code=400, detail="Both files must be PDFs.")
-            text = extract_text_from_pdf(BytesIO(content))
-            texts.append(text)
-
-        # Construct comparison prompt
-        prompt = f"""
-Compare the following two resumes. Analysis strengths, weaknesses, and unique qualities of each candidate. Provide which name of candidate is perfect for software engineering position and Give a 50 words vaild reason for selection.
+    prompt = f"""
+Compare the following two resumes. Analyze strengths, weaknesses, and unique qualities of each candidate. Provide which candidate is better for a software engineering position and give a 50-word valid reason for selection.
 
 Resume 1:
-{texts[0]}
+{text1}
 
 Resume 2:
-{texts[1]}
+{text2}
 """
+    response = model.generate_content(prompt)
+    return response.text
 
-        # Generate comparison
-        response = model.generate_content(prompt)
-        return {"comparison": response.text}
+# Streamlit UI
+st.title("Resume Comparison Tool (AI-Powered)")
+st.markdown("Upload two PDF resumes to compare them for a software engineering role.")
 
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error comparing resumes: {str(e)}")
+uploaded_files = st.file_uploader("Upload exactly 2 PDF resumes", type="pdf", accept_multiple_files=True)
+
+if uploaded_files and len(uploaded_files) == 2:
+    if st.button("Compare Resumes"):
+        try:
+            with st.spinner("Analyzing resumes..."):
+                result = compare_resumes(BytesIO(uploaded_files[0].read()), BytesIO(uploaded_files[1].read()))
+            st.success("Comparison complete!")
+            st.text_area("Result", result, height=300)
+        except Exception as e:
+            st.error(f"Error: {e}")
+elif uploaded_files and len(uploaded_files) != 2:
+    st.warning("Please upload exactly two PDF files.")
