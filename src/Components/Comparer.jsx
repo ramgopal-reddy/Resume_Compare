@@ -54,7 +54,7 @@ const ResumeComparator = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('https://testing-project-rupx.onrender.com/api/compare_resumes', formData, {
+      const response = await axios.post('https://resumecompare.streamlit.app/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
