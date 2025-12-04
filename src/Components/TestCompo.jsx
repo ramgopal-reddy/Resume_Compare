@@ -1,3 +1,5 @@
+import { data } from "./data";
+
 export default function TestCompo() {
     return(
         <section class="bg-white dark:bg-gray-900 font-serif">
@@ -16,11 +18,11 @@ export default function TestCompo() {
                 
                 <div class="mt-2 md:mx-6">
                     <div>
-                        <p class="text-xl font-medium tracking-tight text-white">Ema Watson</p>
-                        <p class="text-blue-200 ">Marketing Manager at Stech</p>
+                        <p class="text-xl font-medium tracking-tight text-white">{data[0].name}</p>
+                        <p class="text-blue-200 ">{data[0].role}</p>
                     </div>
 
-                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quibusdam ducimus libero ad tempora doloribus expedita laborum saepe voluptas perferendis delectus assumenda”.</p>
+                    <p class="mt-4 text-lg leading-relaxed text-white md:text-xl"> “{data[0].bio}”</p>
                     
                     {/* <div class="flex items-center justify-between mt-6 md:justify-start">
                         <button title="left arrow" class="p-2 text-white transition-colors duration-300 border rounded-full rtl:-scale-x-100 hover:bg-blue-400">
